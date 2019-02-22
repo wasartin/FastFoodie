@@ -268,17 +268,6 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     }
 
     /**
-     * Creates a new user
-     * @param UUID
-     */
-    private void createUserData(String UUID){
-        //TODO
-    }
-    /**
-     * Fetches user data
-     * @param UID The Unique Id to poll for
-     */
-    /**
      * Fetches user data
      * @param UID The Unique Id to poll for
      */
@@ -352,6 +341,11 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 
         r.add(request); //Actually processes request
     }
+
+    /**
+     * Creates a user and adds them to the database
+     * @param UID Email address to be used as a uuid
+     */
     private void createUser(String UID) {
         JSONObject js = new JSONObject();
         try {
