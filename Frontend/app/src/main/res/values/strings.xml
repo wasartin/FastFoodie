@@ -10,4 +10,7 @@
     <string name="layout_Dietary_Preferences">Dietary Preferences</string>
     <string name="layout_user_info">User Info</string>
     <string name="button_text">Retrieve Data</string>
+    <string name = "ticket_category_prompt"> Category: </string>
+    <string name="ticket_menu_label">Contact us</string>
+    <string name="ticket_title_hint">Subject</string>
 </resources>
