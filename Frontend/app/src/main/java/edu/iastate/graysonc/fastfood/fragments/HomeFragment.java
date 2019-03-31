@@ -18,7 +18,6 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
-import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.SearchView;
 import android.widget.Spinner;
@@ -35,7 +34,6 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.Objects;
 
 import javax.inject.Inject;
@@ -65,7 +63,7 @@ public class HomeFragment extends Fragment {
     private Animation fINAnim,fOUTAnim;
     private Spinner mSpinner1, mSpinner2;
 
-    enum macrosENUM{
+    public enum macrosENUM{
         FAT("Fat"),
         CARBS("Carbs"),
         PROTEIN("Protein"),
@@ -294,7 +292,7 @@ public class HomeFragment extends Fragment {
         });
     }
 
-    private int getMacro(recycler_card card, macrosENUM type){
+    public int getMacro(recycler_card card, macrosENUM type){
        Log.v("GetMacroLog","Sorting by macro");
         switch(type){
             case FAT:

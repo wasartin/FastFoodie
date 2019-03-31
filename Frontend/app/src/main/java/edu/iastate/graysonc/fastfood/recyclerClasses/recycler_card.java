@@ -4,6 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import edu.iastate.graysonc.fastfood.database.entities.Food;
+import edu.iastate.graysonc.fastfood.fragments.HomeFragment;
 
 public class recycler_card implements Parcelable {
     private String name;
@@ -124,4 +125,5 @@ public class recycler_card implements Parcelable {
     }
 
     public void setmLine2(String text) {mLine2 = text; }
+
 }
