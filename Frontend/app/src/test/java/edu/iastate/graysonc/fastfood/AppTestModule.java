@@ -1,74 +1,61 @@
-package edu.iastate.graysonc.fastfood.di.module;
+package edu.iastate.graysonc.fastfood;
 
 import android.app.Application;
-import android.arch.persistence.room.Room;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import org.mockito.Mockito;
+
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
-import javax.inject.Singleton;
-
-import dagger.Module;
-import dagger.Provides;
 import edu.iastate.graysonc.fastfood.api.Webservice;
 import edu.iastate.graysonc.fastfood.database.MyDatabase;
 import edu.iastate.graysonc.fastfood.database.dao.FavoriteDao;
 import edu.iastate.graysonc.fastfood.database.dao.FoodDao;
 import edu.iastate.graysonc.fastfood.database.dao.UserDao;
+import edu.iastate.graysonc.fastfood.di.module.AppModule;
 import edu.iastate.graysonc.fastfood.repositories.Repository;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-@Module(includes = ViewModelModule.class)
-public class AppModule {
+public class AppTestModule extends AppModule {
 
     // --- DATABASE INJECTION ---
 
-    @Provides
-    @Singleton
-    public MyDatabase provideDatabase(Application application) {
-        return Room.databaseBuilder(application,
-                MyDatabase.class, "MyDatabase.db")
-                .fallbackToDestructiveMigration()
-                .build();
-    }
+    @Override
+    public MyDatabase provideDatabase(Application application) { return Mockito.mock(MyDatabase.class); }
 
-    @Provides
-    @Singleton
-    public UserDao provideUserDao(MyDatabase database) { return database.userDao(); }
+    @Override
+    public UserDao provideUserDao(MyDatabase database) { return Mockito.mock(UserDao.class); }
 
-    @Provides
-    @Singleton
-    public FoodDao provideFoodDao(MyDatabase database) { return database.foodDao(); }
+    @Override
+    public FoodDao provideFoodDao(MyDatabase database) { return Mockito.mock(FoodDao.class); }
 
-    @Provides
-    @Singleton
-    public FavoriteDao provideFavoriteDao(MyDatabase database) { return database.favoriteDao(); }
+    @Override
+    public FavoriteDao provideFavoriteDao(MyDatabase database) { return Mockito.mock(FavoriteDao.class); }
 
     // --- REPOSITORY INJECTION ---
 
-    @Provides
+    @Override
     public Executor provideExecutor() {
         return Executors.newSingleThreadExecutor();
     }
 
-    @Provides
-    @Singleton
+    @Override
     public Repository provideRepository(Webservice webservice, UserDao userDAO, FoodDao foodDAO, FavoriteDao favoriteDao, Executor executor) {
-        return new Repository(webservice, userDAO, foodDAO, favoriteDao, executor);
+        return Mockito.mock(Repository.class);
     }
 
     // --- NETWORK INJECTION ---
 
     private static String BASE_URL = "http://cs309-bs-1.misc.iastate.edu:8080/";
 
-    @Provides
+    @Override
     public Gson provideGson() { return new GsonBuilder().create(); }
 
-    @Provides
+    @Override
     public Retrofit provideRetrofit(Gson gson) {
         Retrofit retrofit = new Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create(gson))
@@ -77,9 +64,8 @@ public class AppModule {
         return retrofit;
     }
 
-    @Provides
-    @Singleton
+    @Override
     public Webservice provideApiWebservice(Retrofit restAdapter) {
-        return restAdapter.create(Webservice.class);
+        return Mockito.mock(Webservice.class);
     }
 }
