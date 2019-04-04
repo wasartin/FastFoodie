@@ -21,27 +21,50 @@ public class RepositoryTest {
     @Rule
     public MockitoRule mockitoRule = MockitoJUnit.rule();
 
-    @Mock Webservice webservice;
-    @Mock UserDao userDao;
-    @Mock FoodDao foodDao;
-    @Mock FavoriteDao favoriteDao;
-    @Mock Executor executor;
+    @Mock
+    Webservice webservice;
+    @Mock
+    UserDao userDao;
+    @Mock
+    FoodDao foodDao;
+    @Mock
+    FavoriteDao favoriteDao;
+    @Mock
+    Executor executor;
 
-    @InjectMocks Repository repo;
+    @InjectMocks
+    Repository repo;
 
     @Test
     public void testGetUser() {
-        
+        repo = new Repository(Mockito.mock(Webservice.class),
+                Mockito.mock(UserDao.class),
+                Mockito.mock(FoodDao.class),
+                Mockito.mock(FavoriteDao.class),
+                Mockito.mock(Executor.class));
+        Mockito.validateMockitoUsage();
     }
 
     @Test
     public void testGetFood() {
-
+        repo = new Repository(Mockito.mock(Webservice.class),
+                Mockito.mock(UserDao.class),
+                Mockito.mock(FoodDao.class),
+                Mockito.mock(FavoriteDao.class),
+                Mockito.mock(Executor.class));
+        Mockito.verify(repo.getFood(Mockito.anyInt()));
+        Mockito.validateMockitoUsage();
     }
 
     @Test
     public void testGetFavoritesForUser() {
-
+        repo = new Repository(Mockito.mock(Webservice.class),
+                Mockito.mock(UserDao.class),
+                Mockito.mock(FoodDao.class),
+                Mockito.mock(FavoriteDao.class),
+                Mockito.mock(Executor.class));
+        repo.getFavorites(Mockito.anyString());
+        Mockito.validateMockitoUsage();
     }
 
 }
