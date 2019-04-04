@@ -44,5 +44,9 @@
     <string name="food_price">Price </string>
     <string name="food_category">Category </string>
     <string name="food_location">Location </string>
+    <string name="food_rating">Rating </string>
+
+    <!-- Strings for ratings -->
+    <string name="user_rating">Your rating:</string>
 
 </resources>

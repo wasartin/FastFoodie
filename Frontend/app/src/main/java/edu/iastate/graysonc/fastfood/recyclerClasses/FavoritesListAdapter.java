@@ -19,6 +19,8 @@ public class FavoritesListAdapter extends RecyclerView.Adapter<FavoritesListAdap
     public interface OnItemClickListener {
         void onItemClick(int position);
 
+        void onRatingClick(int position);
+
         void onDeleteClick(int position);
     }
 

@@ -3,18 +3,23 @@ package edu.iastate.graysonc.fastfood.fragments;
 import android.annotation.SuppressLint;
 import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SimpleItemAnimator;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.PopupWindow;
 
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+
+import java.util.zip.Inflater;
 
 import javax.inject.Inject;
 
@@ -24,6 +29,8 @@ import edu.iastate.graysonc.fastfood.R;
 import edu.iastate.graysonc.fastfood.database.entities.Food;
 import edu.iastate.graysonc.fastfood.recyclerClasses.FavoritesListAdapter;
 import edu.iastate.graysonc.fastfood.view_models.FavoritesViewModel;
+
+import static android.content.Context.LAYOUT_INFLATER_SERVICE;
 
 public class FavoritesFragment extends Fragment {
     private static final String TAG = "FavoritesFragment";
@@ -35,6 +42,8 @@ public class FavoritesFragment extends Fragment {
     private RecyclerView mRecyclerView;
     private FavoritesListAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
+
+    private PopupMenu mPopupMenu;
 
     public FavoritesFragment() {}
 
@@ -62,14 +71,22 @@ public class FavoritesFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_favorites, container, false);
     }
 
-    public void removeItem(int position) {
+    private void removeItem(int position) {
         Food selectedItem = mViewModel.getFavorites().getValue().get(position);
         Log.d(TAG, "removeItem: " + selectedItem.getName());
         mViewModel.removeFavorite(App.account.getEmail(), selectedItem.getId());
         mAdapter.notifyItemRemoved(position);
     }
 
-    public void openFoodPage(int position) {
+    private void openRatingPopup(int position) {
+        LayoutInflater inflater = (LayoutInflater) App.context.getSystemService(LAYOUT_INFLATER_SERVICE);
+        View popupView = inflater.inflate(R.layout.popup_rating,null);
+        mPopupMenu = new PopupMenu(App.context, popupView, 0);
+        // Continue here
+        // TODO: Get rating from star images
+    }
+
+    private void openFoodPage(int position) {
         Food selectedItem = mViewModel.getFavorites().getValue().get(position);
         Log.d(TAG, "openFoodPage: " + selectedItem.getName());
         mAdapter.notifyItemChanged(position);
@@ -93,9 +110,16 @@ public class FavoritesFragment extends Fragment {
             }
 
             @Override
+            public void onRatingClick(int position) {
+                openRatingPopup(position);
+            }
+
+            @Override
             public void onDeleteClick(int position) {
                 removeItem(position);
             }
         });
     }
+
+
 }
