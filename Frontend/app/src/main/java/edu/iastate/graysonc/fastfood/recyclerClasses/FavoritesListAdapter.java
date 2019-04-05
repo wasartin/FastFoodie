@@ -35,7 +35,7 @@ public class FavoritesListAdapter extends RecyclerView.Adapter<FavoritesListAdap
                         mProteinTextView,
                         mFatTextView,
                         mCarbohydrateTextView;
-        public ImageView mDeleteImage, mRestaurantLogo;
+        public ImageView mDeleteImage, mRestaurantLogo, mRatingImage;
 
         public FavoriteViewHolder(View itemView, final OnItemClickListener listener) {
             super(itemView);
@@ -46,6 +46,7 @@ public class FavoritesListAdapter extends RecyclerView.Adapter<FavoritesListAdap
             mFatTextView = itemView.findViewById(R.id.fat_text);
             mCarbohydrateTextView = itemView.findViewById(R.id.carbohydrate_text);
             mDeleteImage = itemView.findViewById(R.id.image_delete);
+            mRatingImage = itemView.findViewById(R.id.image_rating);
             mRestaurantLogo = itemView.findViewById(R.id.restaurant_logo);
 
 
@@ -62,6 +63,18 @@ public class FavoritesListAdapter extends RecyclerView.Adapter<FavoritesListAdap
                                 dropDown.setVisibility(View.GONE);
                             }
                             listener.onItemClick(position);
+                        }
+                    }
+                }
+            });
+
+            mRatingImage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (listener != null) {
+                        int position = getAdapterPosition();
+                        if (position != RecyclerView.NO_POSITION) {
+                            listener.onRatingClick(position);
                         }
                     }
                 }

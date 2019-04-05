@@ -47,6 +47,6 @@
     <string name="food_rating">Rating </string>
 
     <!-- Strings for ratings -->
-    <string name="user_rating">Your rating:</string>
+    <string name="user_rating" translatable="false">Your rating:</string>
 
 </resources>
