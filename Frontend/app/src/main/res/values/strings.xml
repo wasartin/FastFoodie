@@ -35,7 +35,7 @@
     <string name="category">Category :</string>
     <string name="what_can_we_help_you_with">What can we help you with?</string>
     <string name="submit">Submit</string>
-    
+
     <!-- Strings for food info -->
     <string name="food_protein_total">Protein </string>
     <string name="food_carb_total">Carbohydrate </string>

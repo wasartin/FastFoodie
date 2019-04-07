@@ -3,6 +3,7 @@ package edu.iastate.graysonc.fastfood.fragments;
 import android.annotation.SuppressLint;
 import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -18,11 +19,22 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
 
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.tasks.Task;
+
+import org.java_websocket.client.WebSocketClient;
+import org.java_websocket.handshake.ServerHandshake;
+
+import java.net.URI;
+import java.net.URISyntaxException;
+
 import javax.inject.Inject;
 
 import dagger.android.support.AndroidSupportInjection;
 import edu.iastate.graysonc.fastfood.App;
 import edu.iastate.graysonc.fastfood.R;
+import edu.iastate.graysonc.fastfood.activities.RatingActivity;
 import edu.iastate.graysonc.fastfood.database.entities.Food;
 import edu.iastate.graysonc.fastfood.recyclerClasses.FavoritesListAdapter;
 import edu.iastate.graysonc.fastfood.view_models.FavoritesViewModel;
@@ -38,10 +50,10 @@ public class FavoritesFragment extends Fragment {
     private FavoritesListAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
 
-    private PopupWindow mPopupWindow;
-    private View mPopupView;
+    private WebSocketClient mSocketClient;
 
-    public FavoritesFragment() {}
+    public FavoritesFragment() {
+    }
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -61,51 +73,39 @@ public class FavoritesFragment extends Fragment {
             }
         });
 
-        initRatingPopup();
+        // Websocket stuff
+        String w = "http://cs309-bs-1.misc.iastate.edu:8080/websocket/" + App.account.getEmail();
+        try {
+            Log.d("Socket:", "Trying socket");
+            mSocketClient = new WebSocketClient(new URI(w)) {
+                @Override
+                public void onMessage(String message) {
+                    Log.d("", "run() returned: " + message);
+                    // TODO: Update food rating
+                }
+                @Override
+                public void onOpen(ServerHandshake handshake) {
+                    Log.d("OPEN", "run() returned: " + "is connecting");
+                }
+                @Override
+                public void onClose(int code, String reason, boolean remote) {
+                    Log.d("CLOSE", "onClose() returned: " + reason);
+                }
+                @Override
+                public void onError(Exception e) {
+                    Log.d("Exception:", e.toString());
+                }
+            };
+        } catch (URISyntaxException e) {
+            Log.d("Exception:", e.getMessage().toString());
+            e.printStackTrace();
+        }
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_favorites, container, false);
-    }
-
-    private void initRatingPopup() {
-        mPopupView = LayoutInflater.from(getActivity()).inflate(R.layout.popup_rating, null);
-        mPopupWindow = new PopupWindow(mPopupView, WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
-        View.OnClickListener listener = new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (v.getId() == R.id.submit_rating_button) {
-                    //TODO: submit rating
-                    mPopupWindow.dismiss();
-                    return;
-                }
-                ((ImageView)mPopupView.findViewById(R.id.five_stars)).setImageResource(R.drawable.ic_star);
-                ((ImageView)mPopupView.findViewById(R.id.four_stars)).setImageResource(R.drawable.ic_star);
-                ((ImageView)mPopupView.findViewById(R.id.three_stars)).setImageResource(R.drawable.ic_star);
-                ((ImageView)mPopupView.findViewById(R.id.two_stars)).setImageResource(R.drawable.ic_star);
-                switch (v.getId()) {
-                    case R.id.five_stars:
-                        ((ImageView)v).setImageResource(R.drawable.ic_star_filled);
-                    case R.id.four_stars:
-                        ((ImageView)mPopupView.findViewById(R.id.four_stars)).setImageResource(R.drawable.ic_star_filled);
-                    case R.id.three_stars:
-                        ((ImageView)mPopupView.findViewById(R.id.three_stars)).setImageResource(R.drawable.ic_star_filled);
-                    case R.id.two_stars:
-                        ((ImageView)mPopupView.findViewById(R.id.two_stars)).setImageResource(R.drawable.ic_star_filled);
-                    case R.id.one_star:
-                        ((ImageView)mPopupView.findViewById(R.id.one_star)).setImageResource(R.drawable.ic_star_filled);
-                        ((Button)mPopupView.findViewById(R.id.submit_rating_button)).setEnabled(true);
-                        break;
-                }
-            }
-        };
-        mPopupView.findViewById(R.id.five_stars).setOnClickListener(listener);
-        mPopupView.findViewById(R.id.four_stars).setOnClickListener(listener);
-        mPopupView.findViewById(R.id.three_stars).setOnClickListener(listener);
-        mPopupView.findViewById(R.id.two_stars).setOnClickListener(listener);
-        mPopupView.findViewById(R.id.one_star).setOnClickListener(listener);
-        mPopupView.findViewById(R.id.submit_rating_button).setOnClickListener(listener);
     }
 
     private void removeItem(int position) {
@@ -117,9 +117,8 @@ public class FavoritesFragment extends Fragment {
 
     private void openRatingPopup(int position) {
         Log.d(TAG, "openRatingPopup: Called");
-        mPopupWindow.showAsDropDown(getView(), 0, 0);
-        // Continue here
-        // TODO: Get rating from star images
+        Intent intent = new Intent(App.context, RatingActivity.class);
+        startActivityForResult(intent, 1);
     }
 
     private void openFoodPage(int position) {
@@ -157,5 +156,18 @@ public class FavoritesFragment extends Fragment {
         });
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
 
+        // Result returned from launching the Intent from GoogleSignInClient.getSignInIntent(...);
+        if (requestCode == 1) {
+            if (resultCode == 0) {
+                Log.d(TAG, "onActivityResult: rating canceled");
+            } else {
+                int r = data.getIntExtra("rating", 1);
+                Log.d(TAG, "onActivityResult: received rating of " + r);
+            }
+        }
+    }
 }

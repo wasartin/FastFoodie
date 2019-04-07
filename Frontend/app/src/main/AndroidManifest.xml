@@ -16,14 +16,19 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
+        <activity android:name=".activities.RatingActivity"
+            android:theme="@style/Base.Theme.AppCompat.Dialog"/>
         <activity android:name=".activities.SignInActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.MainActivity"></activity>
-        <activity android:name=".PopUps.submitPopUp" android:theme = "@style/AppTheme.CustomThemeTrans"></activity>
+        <activity android:name=".activities.MainActivity" />
+        <activity
+            android:name=".PopUps.submitPopUp"
+            android:theme="@style/AppTheme.CustomThemeTrans" />
     </application>
 
 </manifest>
