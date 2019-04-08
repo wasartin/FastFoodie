@@ -45,7 +45,12 @@ public class Food {
     @SerializedName("located_at")
     private int location;
 
+    @SerializedName("rating")
+    private String rating;
+
     private int isFavorite;
+
+    private int userRating;
 
     private Date lastRefresh;
 
@@ -143,5 +148,21 @@ public class Food {
 
     public void setIsFavorite(int favorite) {
         isFavorite = favorite;
+    }
+
+    public String getRating() {
+        return rating;
+    }
+
+    public void setRating(String rating) {
+        this.rating = rating;
+    }
+
+    public int getUserRating() {
+        return userRating;
+    }
+
+    public void setUserRating(int userRating) {
+        this.userRating = userRating;
     }
 }

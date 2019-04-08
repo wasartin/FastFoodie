@@ -29,7 +29,8 @@ public class FavoritesListAdapter extends RecyclerView.Adapter<FavoritesListAdap
     }
 
     public static class FavoriteViewHolder extends RecyclerView.ViewHolder {
-        public TextView mNameTextView,
+        public TextView mRatingTextView,
+                        mNameTextView,
                         mPriceTextView,
                         mCalorieTextView,
                         mProteinTextView,
@@ -39,6 +40,7 @@ public class FavoritesListAdapter extends RecyclerView.Adapter<FavoritesListAdap
 
         public FavoriteViewHolder(View itemView, final OnItemClickListener listener) {
             super(itemView);
+            mRatingTextView = itemView.findViewById(R.id.rating_text);
             mNameTextView = itemView.findViewById(R.id.nameTextView);
             mPriceTextView = itemView.findViewById(R.id.price_text);
             mCalorieTextView = itemView.findViewById(R.id.calorie_text);
@@ -108,6 +110,9 @@ public class FavoritesListAdapter extends RecyclerView.Adapter<FavoritesListAdap
     @Override
     public void onBindViewHolder(FavoriteViewHolder holder, int position) {
         Food currentItem = mFavoritesList.get(position);
+        if (!currentItem.getRating().equals("0.0")) {
+            holder.mRatingTextView.setText("" + currentItem.getRating() + "/5.0");
+        }
         holder.mPriceTextView.setText(currentItem.getPrice());
         holder.mNameTextView.setText(currentItem.getName());
         holder.mCalorieTextView.setText("" + currentItem.getCalorieTotal());

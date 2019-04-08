@@ -1,6 +1,8 @@
 package edu.iastate.graysonc.fastfood.fragments;
 
 import android.annotation.SuppressLint;
+import android.arch.lifecycle.Lifecycle;
+import android.arch.lifecycle.LifecycleOwner;
 import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
@@ -74,14 +76,13 @@ public class FavoritesFragment extends Fragment {
         });
 
         // Websocket stuff
-        String w = "http://cs309-bs-1.misc.iastate.edu:8080/websocket/" + App.account.getEmail();
+        String w = "ws://cs309-bs-1.misc.iastate.edu:8080/websocket/" + App.account.getEmail();
         try {
             Log.d("Socket:", "Trying socket");
             mSocketClient = new WebSocketClient(new URI(w)) {
                 @Override
                 public void onMessage(String message) {
                     Log.d("", "run() returned: " + message);
-                    // TODO: Update food rating
                 }
                 @Override
                 public void onOpen(ServerHandshake handshake) {
@@ -100,6 +101,7 @@ public class FavoritesFragment extends Fragment {
             Log.d("Exception:", e.getMessage().toString());
             e.printStackTrace();
         }
+        mSocketClient.connect();
     }
 
 
@@ -117,7 +119,9 @@ public class FavoritesFragment extends Fragment {
 
     private void openRatingPopup(int position) {
         Log.d(TAG, "openRatingPopup: Called");
+
         Intent intent = new Intent(App.context, RatingActivity.class);
+        intent.putExtra("fid", mViewModel.getFavorites().getValue().get(position).getId());
         startActivityForResult(intent, 1);
     }
 
@@ -160,14 +164,25 @@ public class FavoritesFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        // Result returned from launching the Intent from GoogleSignInClient.getSignInIntent(...);
         if (requestCode == 1) {
             if (resultCode == 0) {
                 Log.d(TAG, "onActivityResult: rating canceled");
             } else {
                 int r = data.getIntExtra("rating", 1);
-                Log.d(TAG, "onActivityResult: received rating of " + r);
+                int fid = data.getIntExtra("fid", 0);
+                Log.d(TAG, "onActivityResult: received rating of " + r + " on food id " + fid);
+                mViewModel.submitFoodRating(App.account.getEmail(), fid, r);
+                if (mSocketClient.isOpen()) {
+                    mSocketClient.send(fid + "," + r);
+                }
+                mViewModel.updateFavorites(this, mAdapter);
             }
         }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mSocketClient.close();
     }
 }

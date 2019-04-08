@@ -46,6 +46,7 @@ public class RatingActivity extends AppCompatActivity implements View.OnClickLis
         } else if (v.getId() == R.id.submit_rating_button) {
             Intent i = new Intent();
             i.putExtra("rating", rating);
+            i.putExtra("fid", getIntent().getExtras().getInt("fid"));
             setResult(1, i);
             finish();
         } else {

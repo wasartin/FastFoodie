@@ -45,11 +45,11 @@ public class MainActivity extends AppCompatActivity implements HasSupportFragmen
         homeFragment = new HomeFragment();
         favoritesFragment = new FavoritesFragment();
         profileFragment = new ProfileFragment();
-        fragmentManager = getSupportFragmentManager();
+        /*fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().add(R.id.main_frame, profileFragment, "profile").hide(profileFragment).commit();
         fragmentManager.beginTransaction().add(R.id.main_frame, favoritesFragment, "favorites").hide(favoritesFragment).commit();
         fragmentManager.beginTransaction().add(R.id.main_frame, homeFragment, "home").commit();
-        currentFragment = homeFragment;
+        currentFragment = homeFragment;*/
 
         // Start in home fragment
         if (savedInstanceState == null) {
@@ -81,7 +81,7 @@ public class MainActivity extends AppCompatActivity implements HasSupportFragmen
     }
 
     private void setFragment(Fragment fragment) {
-        fragmentManager.beginTransaction().hide(currentFragment).show(fragment).commit();
-        currentFragment = fragment;
+        getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, fragment).commit();
+        //currentFragment = fragment;
     }
 }

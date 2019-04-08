@@ -202,19 +202,60 @@ public class Repository {
                     executor.execute(() -> {
                         List<Food> favorites = response.body();
                         if (favorites == null) {
-                            Log.e(TAG,"Grayson your code doesn't work <3 - refreshFood");
+                            Log.e(TAG, "Grayson your code doesn't work <3 - refreshFood");
                         } else {
                             for (Food f : favorites) {
                                 f.setIsFavorite(1);
-                                foodDao.delete(f.getId());
+                                executor.execute(() -> {
+                                    webservice.getAverageFoodRating(f.getId()).enqueue(new Callback<String>() {
+                                        @Override
+                                        public void onResponse(Call<String> call, Response<String> response) {
+                                            Log.d(TAG, "onResponse: " + response.body());
+                                            f.setRating(response.body());
+                                            executor.execute(() -> {
+                                                foodDao.insert(f);
+                                            });
+                                        }
+                                        @Override
+                                        public void onFailure(Call<String> call, Throwable t) {
+                                            executor.execute(() -> {
+                                                foodDao.insert(f);
+                                            });
+                                            t.printStackTrace();
+                                        }
+                                    });
+                                });
                             }
-                            foodDao.insert(favorites);
                         }
                     });
                 }
                 @Override
                 public void onFailure(Call<List<Food>> call, Throwable t) {
-                        t.printStackTrace();
+                    t.printStackTrace();
+                }
+            });
+        });
+    }
+
+    public void submitFoodRating(String userEmail, int foodId, int rating) {
+        executor.execute(() -> {
+            webservice.createFoodRating(userEmail, foodId, rating).enqueue(new Callback<String>() {
+                @Override
+                public void onResponse(Call<String> call, Response<String> response) {
+                    refreshFavoriteFoodsForUser(userEmail);
+                }
+                @Override
+                public void onFailure(Call<String> call, Throwable t) {
+                    webservice.editFoodRating(userEmail, foodId, rating).enqueue(new Callback<String>() {
+                        @Override
+                        public void onResponse(Call<String> call, Response<String> response) {
+                            refreshFavoriteFoodsForUser(userEmail);
+                        }
+                        @Override
+                        public void onFailure(Call<String> call, Throwable t) {
+                            t.printStackTrace();
+                        }
+                    });
                 }
             });
         });

@@ -75,7 +75,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.5"
-                    android:text="TextView"
+                    android:text="@string/no_rating"
                     android:textAppearance="@style/TextAppearance.Widget.AppCompat.Toolbar.Subtitle" />
             </TableRow>
 
@@ -96,7 +96,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.5"
-                    android:text="TextView"
+                    android:text="@string/food_not_found"
                     android:textAppearance="@style/TextAppearance.Widget.AppCompat.Toolbar.Subtitle" />
             </TableRow>
 
@@ -117,7 +117,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.5"
-                    android:text="TextView"
+                    android:text="@string/food_not_found"
                     android:textAlignment="viewStart"
                     android:textAppearance="@style/TextAppearance.Widget.AppCompat.Toolbar.Subtitle" />
 
@@ -140,7 +140,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.5"
-                    android:text="TextView"
+                    android:text="@string/food_not_found"
                     android:textAppearance="@style/TextAppearance.Widget.AppCompat.Toolbar.Subtitle" />
             </TableRow>
 
@@ -161,7 +161,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.5"
-                    android:text="TextView"
+                    android:text="@string/food_not_found"
                     android:textAppearance="@style/TextAppearance.Widget.AppCompat.Toolbar.Subtitle" />
             </TableRow>
 
@@ -182,7 +182,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.5"
-                    android:text="TextView"
+                    android:text="@string/food_not_found"
                     android:textAppearance="@style/TextAppearance.Widget.AppCompat.Toolbar.Subtitle" />
             </TableRow>
 
