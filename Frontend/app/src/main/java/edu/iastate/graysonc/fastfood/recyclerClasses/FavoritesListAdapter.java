@@ -22,10 +22,17 @@ public class FavoritesListAdapter extends RecyclerView.Adapter<FavoritesListAdap
         void onDeleteClick(int position);
     }
 
+    /**
+     * Sets the onclick listener of the adapter
+     * @param listener Listener to use
+     */
     public void setOnItemClickListener(OnItemClickListener listener) {
         mListener = listener;
     }
 
+    /**
+     * A view holder to store and handle the favorites list
+     */
     public static class FavoriteViewHolder extends RecyclerView.ViewHolder {
         public TextView mNameTextView,
                         mPriceTextView,
@@ -35,6 +42,11 @@ public class FavoritesListAdapter extends RecyclerView.Adapter<FavoritesListAdap
                         mCarbohydrateTextView;
         public ImageView mDeleteImage, mRestaurantLogo;
 
+        /**
+         * Creates a favorite view holder
+         * @param itemView The xml view to use
+         * @param listener The onclick listener to be used
+         */
         public FavoriteViewHolder(View itemView, final OnItemClickListener listener) {
             super(itemView);
             mNameTextView = itemView.findViewById(R.id.nameTextView);
@@ -79,6 +91,10 @@ public class FavoritesListAdapter extends RecyclerView.Adapter<FavoritesListAdap
         }
     }
 
+    /**
+     * Sets the data to be used in the recycler view
+     * @param favoriteList The data to be used in the recycler view
+     */
     public FavoritesListAdapter(List<Food> favoriteList) {
         mFavoritesList = favoriteList;
     }

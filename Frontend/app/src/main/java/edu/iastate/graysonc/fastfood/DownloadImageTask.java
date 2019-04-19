@@ -15,6 +15,10 @@ import java.net.URL;
 public class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
     ImageView image;
 
+    /**
+     * Creates an image download task to asynchronously download data
+     * @param image
+     */
     public DownloadImageTask(ImageView image) {
         this.image = image;
     }

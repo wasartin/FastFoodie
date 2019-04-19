@@ -16,12 +16,19 @@ import edu.iastate.graysonc.fastfood.database.entities.Food;
 
 public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.FoodViewHolder> {
 
+    /**
+     * A view for the foods recycler list
+     */
     public class FoodViewHolder extends RecyclerView.ViewHolder {
         private Food food;
         private final TextView nameTextView;
         private final TextView restaurantTextView;
         private final CheckBox favoriteButton;
 
+        /**
+         * Creates a view for the foods recycler list
+         * @param itemView the xml view to use
+         */
         private FoodViewHolder(View itemView) {
             super(itemView);
             nameTextView = itemView.findViewById(R.id.name_text);
@@ -29,6 +36,10 @@ public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.FoodVi
             favoriteButton = itemView.findViewById(R.id.favorite_button);
         }
 
+        /**
+         * Returns the food object stored here
+         * @return Food object stored here
+         */
         public Food getFood() {
             return food;
         }
@@ -58,11 +69,6 @@ public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.FoodVi
             holder.nameTextView.setText("Loading...");
             holder.restaurantTextView.setText("Loading...");
         }
-    }
-
-    public void setFoods(List<Food> foods) {
-        mFoods = foods;
-        notifyDataSetChanged();
     }
 
     // getItemCount() is called many times, and when it is first called,

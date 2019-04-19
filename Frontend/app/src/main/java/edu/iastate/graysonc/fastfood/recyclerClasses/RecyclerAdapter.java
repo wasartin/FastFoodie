@@ -22,7 +22,10 @@ public class RecyclerAdapter extends  android.support.v7.widget.RecyclerView.Ada
         void onFaveClick(int position);
     }
 
-    //Assign an on click listener to this Adapter
+    /**
+     * Assign an on click listener to this Adapter
+     * @param listener onClick listener to be used
+     */
     public void setOnItemClickListener(OnItemClickListener listener){
         mListener = listener;
     }
@@ -68,6 +71,10 @@ public class RecyclerAdapter extends  android.support.v7.widget.RecyclerView.Ada
         }
     }
 
+    /**
+     * Creates an Adaptor given a list
+     * @param list List of data to be used
+     */
     public RecyclerAdapter(ArrayList<recycler_card> list){
         mList = list;
     }

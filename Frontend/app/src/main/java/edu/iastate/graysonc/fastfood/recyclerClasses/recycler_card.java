@@ -51,6 +51,10 @@ public class recycler_card implements Parcelable {
         this.id = id;
     }
 
+    /**
+     * Creates a recycler card from a food object
+     * @param food All the data to be used in this card
+     */
     public recycler_card(Food food) {
         //Food(@NonNull int id, String name, int proteinTotal, int carbTotal, int fatTotal, int calorieTotal, int location)
         this.name = food.getName();
@@ -61,6 +65,10 @@ public class recycler_card implements Parcelable {
 
     }
 
+    /**
+     * Creates a recycler card from a destroyed view
+     * @param in The stored data from the destroyed view
+     */
     protected recycler_card(Parcel in) {
         this.foodId = in.readInt();
         name = in.readString();
@@ -82,21 +90,34 @@ public class recycler_card implements Parcelable {
         }
     };
 
+    /**
+     * Returns the food name
+     * @return The food name
+     */
     public String getFood() {
         return name;
     }
 
+    /**
+     * Returns the food data
+     * @return The food data
+     */
     public String getData() {
         return mLine2;
     }
 
+    /**
+     * @return true for a favorite, false for a not favorite
+     */
     public boolean isFavored() {
         return favored;
     }
 
+    /**
+     * @param val true to set this item to be a favorite
+     */
     public void setFavored(boolean val) {favored = val;}
 
-    public void setID(int val) {id = val;}
 
     @Override
     public int describeContents() {
@@ -111,17 +132,24 @@ public class recycler_card implements Parcelable {
         dest.writeInt(id);
     }
 
+    /**
+     * @return id of the food stored here
+     */
     public int getFoodId() {
         return foodId;
     }
 
-    public void setFoodId(int foodId) {
-        this.foodId = foodId;
-    }
 
+    /**
+     * The whole food object stored here
+     * @return
+     */
     public Food getFoodObj() {
         return foodObj;
     }
 
+    /**
+     * @param text additional data to be stored here
+     */
     public void setmLine2(String text) {mLine2 = text; }
 }
