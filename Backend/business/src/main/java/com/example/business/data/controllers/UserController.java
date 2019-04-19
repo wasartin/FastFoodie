@@ -18,68 +18,64 @@ import com.example.business.data.repositories.UserRepository;
 import com.example.business.data.services.UserService;
 
 /**
- * Verbs are bad for api, but I am only doing it temporarily
- * @author watis
+ * @author Will and Jon
  *
  */
 @RestController
 @RequestMapping(value="/users")
 public class UserController {
-	
-	private final String JSON_OBJECT_RESPONSE_KEY1 = "data";
-	@SuppressWarnings("unused")
-	private final String JSON_OBJECT_RESPONSE_KEY2 = "info";
-	@SuppressWarnings("unused")
-	private final String JSON_OBJECT_RESPONSE_KEY3 = "favoritesList";
-	
+
 	@Autowired
 	UserRepository userRepository;
 	
 	@Autowired
 	UserService userService;
 	
-	//TODO Be sure to delete this
-	//	This is only here so that the old way of pulling users still works. 
-	//		Once the 'getUserJSONObject' method can be parsed my Front end, 
-	//		this will then be deleted.
-	@RequestMapping(method = RequestMethod.GET, path = "old/{user_email}")
+	/**
+	 * get a specific user
+	 * @param user_email
+	 * @return specific user
+	 */
+	@RequestMapping(method = RequestMethod.GET, path = "/{user_email}")
 	@ResponseBody
 	public Optional<User> getUser(@PathVariable String user_email){
 		return userService.getUser(user_email);
 	}
 
-	//TODO change the mapping here, as well as method name. the json one should have '/json/' in the url
-	// 	Once 'getAllUsersJSONObject' method can be correctly parsed by 
-	//		front end, this will be deleted
-	@GetMapping("old/all")
+	/**
+	 * get all users as optional 
+	 * @param user_email
+	 * @return optional<users>
+	 */
+	@GetMapping("/all")
 	public Iterable<User> getAllUsers() {
 		return userService.getAllUsers();
 	}
 
 	/**
-	 * TODO: The User's favorites list will be added here as well. It will be the second key in this response=
+	 * returns json object of specific user
 	 * @param user_email
-	 * @return
+	 * @return a json object of the user
 	 */
-	@RequestMapping(method = RequestMethod.GET, path = "/{user_email}", produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(method = RequestMethod.GET, path = "json/{user_email}", produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public JSONObject getUserJSONObject(@PathVariable String user_email) {//TODO will just be changed to getUser once conversion is complete
 		return userService.getUserJSONObject(user_email);
 	}
 
 	/**
-	 * 
+	 * gets all users as json objects
 	 * @return JSONObject that has key1-> "Users": value1->JSONArray of users in System
 	 */
-	@RequestMapping(value = "/all", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "json/all", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public JSONObject getAllUsersJSONObject()  {
 		return userService.getAllUsersJSONObject();
 	}
 
 	/**
-	 * Currently just takes user Object. Might need to be a JSONObject I parse if more info is required.
+	 * 
 	 * @param newUser
-	 * @return
+	 * @return a json object response
 	 */
 	@RequestMapping(method = RequestMethod.POST, path = "/create", produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
@@ -90,7 +86,7 @@ public class UserController {
 	/**
 	 * Deletes the user given their unique id
 	 * @param user_email
-	 * @return
+	 * @return a json object response
 	 */
 	@RequestMapping(method = RequestMethod.DELETE, path = "/delete/{user_email}", produces = MediaType.APPLICATION_JSON_VALUE) 
 	@ResponseBody
@@ -99,12 +95,8 @@ public class UserController {
 	}
 	
 	/**
-	 * JSONObject. 1st key is old
-	 * 2nd key is new
-	 * PUT is for update
-	 * TODO: When a user wants to change emails, will need to switch over favorites list
 	 * @param userToEdit
-	 * @return
+	 * @return a json object response
 	 */
 	@RequestMapping(method = RequestMethod.PUT, path = "/edit/{user_email}", produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
