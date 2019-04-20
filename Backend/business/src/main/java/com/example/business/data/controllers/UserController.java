@@ -73,7 +73,7 @@ public class UserController {
 	}
 
 	/**
-	 * 
+	 * creates a new user
 	 * @param newUser
 	 * @return a json object response
 	 */
@@ -95,6 +95,7 @@ public class UserController {
 	}
 	
 	/**
+	 * edits a user
 	 * @param userToEdit
 	 * @return a json object response
 	 */

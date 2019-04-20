@@ -24,14 +24,27 @@ public class UserService {
 	@Autowired
 	UserRepository userRepository;
 	
+	/**
+	 * get a specific user
+	 * @param user_email
+	 * @return specific user
+	 */
 	public Optional<User> getUser(String user_email){
 		return userRepository.findById(user_email);
 	}
-	
+	/**
+	 * get all users as optional 
+	 * @param user_email
+	 * @return optional<users>
+	 */
 	public Iterable<User> getAllUsers() {
 		return userRepository.findAll();
 	}
-	
+	/**
+	 * returns json object of specific user
+	 * @param user_email
+	 * @return a json object of the user
+	 */
 	@SuppressWarnings("unchecked")
 	public JSONObject getUserJSONObject(String user_email) {//TODO will just be changed to getUser once conversion is complete
 		Optional<User> temp = userRepository.findById(user_email);
@@ -65,7 +78,10 @@ public class UserService {
 		userAsJSONObj.put(USER_TYPE_KEY, user.getUser_type());
 		return userAsJSONObj;
 	}
-	
+	/**
+	 * gets all users as json objects
+	 * @return JSONObject that has key1-> "Users": value1->JSONArray of users in System
+	 */
 	@SuppressWarnings("unchecked")
 	public JSONObject getAllUsersJSONObject()  {
 		JSONObject toReturn = new JSONObject();
@@ -79,6 +95,13 @@ public class UserService {
 		return toReturn;
 	}
 	
+	/**
+	 * private helper to generate json response
+	 * @param status
+	 * @param input
+	 * @param message
+	 * @return json response
+	 */
 	@SuppressWarnings("unchecked")
 	private JSONObject generateResponse(int status, HttpStatus input, String message) {
 		JSONObject response = new JSONObject();
@@ -87,7 +110,11 @@ public class UserService {
 		response.put("message", message);
 		return response;
 	}
-	
+	/**
+	 * creates a new user
+	 * @param newUser
+	 * @return a json object response
+	 */
 	public JSONObject createUser(User newUser) {
 		JSONObject response;
 		try {
@@ -103,7 +130,11 @@ public class UserService {
 		}
 		return response;
 	}
-	
+	/**
+	 * Deletes the user given their unique id
+	 * @param user_email
+	 * @return a json object response
+	 */
 	public JSONObject deleteUser(String user_email) {
 		JSONObject response;
 		try {
@@ -119,7 +150,11 @@ public class UserService {
 		}
 		return response;
 	}
-	
+	/**
+	 * edits a user
+	 * @param userToEdit
+	 * @return a json object response
+	 */
 	public JSONObject editUser(User newUserInfo, String user_email) {
 		JSONObject response;
 		try {

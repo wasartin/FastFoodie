@@ -32,7 +32,10 @@ public class RestaurantService {
 		rIters.forEach(rList::add);
 		return rList;
 	}
-	
+	/**
+	 * get all restaurants as jsonobjects
+	 * @return JSONObject that has key1-> "Restaurants": value1->JSONArray of restaurants in System
+	 */
 	@SuppressWarnings("unchecked")
 	public JSONObject getAllRestaurantsJSONObject()  {
 		JSONObject toReturn = new JSONObject();
@@ -49,7 +52,11 @@ public class RestaurantService {
 		toReturn.put(key1, listOfRestaurants);
 		return toReturn;
 	}
-	
+	/**
+	 * returns JSON Object of restaurant whose id was specified
+	 * @param restaurant_id id of desired restaurant
+	 * @return JSON Object of desired restaurant
+	 */
 	@SuppressWarnings("unchecked")
 	public JSONObject getRestaurantJSONObject(int restaurant_id) {
 		Optional<Restaurant> temp = restaurantRepo.findById(restaurant_id);
@@ -61,11 +68,19 @@ public class RestaurantService {
 		toReturn.put("data", restaurantInfo);
 		return toReturn;
 	}
-	
+	/**
+	 * Old method for GETting restaurant object
+	 * @param restaurant_id
+	 * @return restaurant object of stated id. (Not JSON Object)
+	 */
 	public Optional<Restaurant> getRestaurant(int restaurant_id){
 		return restaurantRepo.findById(restaurant_id);
 	}
-	
+	/**
+	 * adds a new restaurant to the database if said restaurant doesn't already exist
+	 * @param newRestaurant
+	 * @return Map of the message and http status of the post
+	 */
 	public Map<String, Object> createRestaurant(Restaurant newRestaurant){
 		HashMap<String, Object> response = new HashMap<>();
 		try {
@@ -89,7 +104,11 @@ public class RestaurantService {
 		}
 		return response;
 	}
-	
+	/**
+	 * Deletes restaurant corresponding to restaurant_id in url path
+	 * @param restaurant_id
+	 * @return response
+	 */
 	public Map<String,Object> deleteRestaurant(int restaurant_id) {
 		HashMap<String,Object> response = new HashMap<>();
 		try {
@@ -110,7 +129,12 @@ public class RestaurantService {
 		}
 		return response;
 	}
-	
+	/**
+	 * edits a restaurant, specified in the url path by its id 
+	 * @param updatedRestaurant info to update restaurant with
+	 * @param restaurant_id which restaurant to update
+	 * @return response
+	 */
 	public Map<String,Object> editRestaurant(Restaurant updatedRestaurant, int restaurant_id) {
 		HashMap<String,Object> response = new HashMap<>();
 		try {

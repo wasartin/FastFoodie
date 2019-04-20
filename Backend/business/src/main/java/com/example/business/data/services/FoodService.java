@@ -20,14 +20,26 @@ public class FoodService {
 	@Autowired
 	FoodRepository foodRepo;
 
+	/**
+	 * returns an optional for a specified food
+	 * @param food_id
+	 * @return optional<food>
+	 */
 	public Optional<Food> getFood(int food_id){
 		return foodRepo.findById(food_id);
 	}
-	
+	/**
+	 * returns iterable for all food objects
+	 * @return iterable<food>
+	 */
 	public Iterable<Food> getAllFoodList(){
 		return foodRepo.findAll();
 	}
-	
+	/**
+	 *returns a json object for a specified food
+	 * @param food_id
+	 * @return json object for specific food
+	 */
 	@SuppressWarnings("unchecked")
 	public JSONObject jsonGetFood(int food_id) {
 		Optional<Food> temp = foodRepo.findById(food_id);
@@ -35,7 +47,10 @@ public class FoodService {
 		response.put(JSON_OBJECT_RESPONSE_KEY1, temp.get());
 		return response;
 	}
-	
+	/**
+	 * returns a json object with all foods in the database
+	 * @return JSONObject 
+	 */
 	public List<Food> getFoods(){
 		Iterable<Food> uIters = foodRepo.findAll();
 		List<Food> uList = new ArrayList<Food>();
@@ -43,6 +58,11 @@ public class FoodService {
 		return uList;
 	}
 	
+	/**
+	 * parses information into json object
+	 * @param food object
+	 * @return json object of food
+	 */
 	@SuppressWarnings("unchecked")
 	public JSONObject parseFoodIntoJSONObject(Food food) {
 		final String FOOD_ID_KEY = "food_id";
@@ -63,7 +83,10 @@ public class FoodService {
 		foodAsJSONObj.put(LOCATED_AT_KEY, food.getLocated_at());
 		return foodAsJSONObj;
 	}
-	
+	/**
+	 * returns a json object with all foods in the database
+	 * @return JSONObject 
+	 */
 	@SuppressWarnings("unchecked")
 	public JSONObject jsonGetAllFood()  {
 		JSONObject toReturn = new JSONObject();
@@ -76,7 +99,13 @@ public class FoodService {
 		toReturn.put(key1, listOfFoods);
 		return toReturn;
 	}
-	
+	/**
+	 * generate json response
+	 * @param status
+	 * @param input
+	 * @param message
+	 * @return json response to interpret status of operation
+	 */
 	@SuppressWarnings("unchecked")
 	public JSONObject generateResponse(int status, HttpStatus input, String message) {
 		JSONObject response = new JSONObject();
@@ -85,7 +114,11 @@ public class FoodService {
 		response.put("message", message);
 		return response;
 	}
-	
+	/**
+	 * Currently just takes food Object. Might need to be a JSONObject I parse if more info is required.
+	 * @param newFood
+	 * @return a json object response
+	 */
 	public JSONObject createFood(Food newFood) {
 		JSONObject response;
 		try {
@@ -101,7 +134,11 @@ public class FoodService {
 		}
 		return response;
 	}
-	
+	/**
+	 * Deletes the food given their unique id
+	 * @param food_id
+	 * @return a json object response
+	 */
 	public JSONObject deleteFood(int food_id) {
 		JSONObject response;
 		try {
@@ -117,7 +154,10 @@ public class FoodService {
 		}
 		return response;
 	}
-	
+	/**takes in a food object and edits the specified food to match the object taken in 
+	 * @param food To edit
+	 * @return a json object response
+	 */
 	public JSONObject editFood(Food newFood, int food_id) {
 		JSONObject response;
 		try {

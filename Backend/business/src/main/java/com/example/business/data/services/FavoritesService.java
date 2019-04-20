@@ -21,14 +21,28 @@ public class FavoritesService {
 	@Autowired 
 	FavoritesRepository favoritesRepository;
 	
+	/**
+	 * get favorites by id
+	 * @param fav_id
+	 * @return optional of favorite
+	 */
 	public Optional<Favorites> getfavorite(int fav_id){
 		return favoritesRepository.findById(fav_id);
 	}
 	
+	/**
+	 * gets all favorites
+	 * @return iterable of favorites
+	 */
 	public Iterable<Favorites> getAllfavorite() {
 		return favoritesRepository.findAll();
 	}
 	
+	/**
+	 * gets favorites
+	 * @param favorites_id
+	 * @return json object of favorite
+	 */
 	@SuppressWarnings("unchecked")
 	public JSONObject getfavoriteJSONObject(int favorites_id) {
 		JSONObject response = new JSONObject();
@@ -54,6 +68,11 @@ public class FavoritesService {
 		return uList;
 	}
 	
+	/**
+	 * takes in favorite and spits out json of that favorite
+	 * @param favorite
+	 * @return json object of favorite
+	 */
 	@SuppressWarnings("unchecked")
 	public JSONObject parsefavoriteIntoJSONObject(Favorites favorite) {
 		final String favorite_USER_ID_KEY = "user_id";
@@ -66,6 +85,10 @@ public class FavoritesService {
 		return favoriteAsJSONObj;
 	}
 	
+	/**
+	 * gets all favorites
+	 * @return json object of all favorites
+	 */
 	@SuppressWarnings("unchecked")
 	public JSONObject getAllFavoritesJSONObject()  {
 		JSONObject toReturn = new JSONObject();
@@ -79,6 +102,11 @@ public class FavoritesService {
 		return toReturn;
 	}
 	
+	/**
+	 * get all favorites
+	 * @param user_id
+	 * @return json object of favorites
+	 */
 	@SuppressWarnings("unchecked")
 	public JSONArray getAllFavorites(String user_id) {
 		JSONArray usersFavorites = new JSONArray();
@@ -91,6 +119,11 @@ public class FavoritesService {
 		return usersFavorites;
 	}
 	
+	/**
+	 * decides if a favorites exists or not
+	 * @param newFav
+	 * @return boolean
+	 */
 	private boolean alreadyExists(Favorites newFav) {
 		List<Favorites> fullListOfFavorites = getFavorites();
 		for(Favorites fav : fullListOfFavorites) {
@@ -101,6 +134,13 @@ public class FavoritesService {
 		return false;
 	}
 	
+	/**
+	 * generate a json response
+	 * @param status
+	 * @param input
+	 * @param message
+	 * @return json object response to respond to status of operation
+	 */
 	@SuppressWarnings("unchecked")
 	public JSONObject generateResponse(int status, HttpStatus input, String message) {
 		JSONObject response = new JSONObject();
@@ -110,6 +150,11 @@ public class FavoritesService {
 		return response;
 	}
 	
+	/**
+	 * creates new favorites
+	 * @param newfavorite
+	 * @return json object response
+	 */
 	public JSONObject createFavorite(Favorites newfavorite) {
 		JSONObject response;
 		try {
@@ -129,6 +174,12 @@ public class FavoritesService {
 		return response;
 	}
 	
+	/**
+	 * creates new favorite
+	 * @param user_id
+	 * @param fid
+	 * @return json object response
+	 */
 	public JSONObject createFavoriteForUser(String user_id, int fid) {
 		Favorites newFav = new Favorites(user_id, fid);
 		JSONObject response;
@@ -146,6 +197,11 @@ public class FavoritesService {
 		return response;
 	}
 	
+	/**
+	 * deletes a specific favorite
+	 * @param favorites_id
+	 * @return json object response
+	 */
 	public JSONObject deleteFavorite(int favorites_id) {
 		JSONObject response;
 		try {
@@ -161,7 +217,13 @@ public class FavoritesService {
 		}
 		return response;
 	}
-	
+
+	/**
+	 * delete a specific favorite
+	 * @param user_id
+	 * @param fid
+	 * @return json object response
+	 */
 	public JSONObject deleteFavoriteByUser(String user_id, int fid) {
 		JSONObject response;
 		boolean found = false;
