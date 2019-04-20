@@ -9,11 +9,19 @@ import org.springframework.web.socket.server.standard.ServerEndpointExporter;
 @Configuration
 public class WebSocketConfig {
 
+	/**
+	 * returns a new server enpoint exporter
+	 * @return a new server endpoint exporter
+	 */
 	@Bean
 	public ServerEndpointExporter serverEndpointExporter() {
 		return new ServerEndpointExporter();
 	}
 	
+	/**
+	 * returns a new custom configurator
+	 * @return new custom configurator
+	 */
 	@Bean
 	public CustomConfigurator customConfigurator() {
 		return new CustomConfigurator();

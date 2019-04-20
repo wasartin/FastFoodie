@@ -38,12 +38,24 @@ public class WebSocketServer {
 	
 	private final Logger logger = LoggerFactory.getLogger(WebSocketServer.class);
 	
+	/**
+	 * On open, opens a new session with the specific user email
+	 * @param session
+	 * @param user_email
+	 * @throws IOException
+	 */
 	@OnOpen
 	public void onOpen(Session session, @PathParam("user_email") String user_email) throws IOException {
 		sessionUserEmailMap.put(session, user_email);
 		usernameSessionMap.put(user_email, session);
 	}
 	
+	/**
+	 * sends a message (string) and updates the session and message
+	 * @param session
+	 * @param message
+	 * @throws IOException
+	 */
 	@OnMessage
 	public void onMessage(Session session, String message) throws IOException{
 		String user_email = sessionUserEmailMap.get(session);
@@ -52,6 +64,12 @@ public class WebSocketServer {
 		update(message);
 	}
 	
+	/**
+	 * updates the database
+	 * @param user_email
+	 * @param message
+	 * @return String
+	 */
 	private String updateDataBase(String user_email, String message) {
 		String result = "@";
 		//"299, 5"
@@ -84,6 +102,11 @@ public class WebSocketServer {
 		return "@ The database has been updated";
 	}
 	
+	/**
+	 * gets specific rating from a specific food id
+	 * @param food_id
+	 * @return double food rating 
+	 */
 	private double getRating(int food_id) {
 		List<Integer> ratingList = foodRatingRepo.findAllRatingsForFood(food_id);
 		double sum = 0;
@@ -97,6 +120,11 @@ public class WebSocketServer {
 		return sum / ratingList.size();
 	}
 	
+	/**
+	 * closes the session on close
+	 * @param session
+	 * @throws IOException
+	 */
 	@OnClose
 	public void onClose(Session session) throws IOException{
 		String user_email = sessionUserEmailMap.get(session);
@@ -104,11 +132,21 @@ public class WebSocketServer {
     	usernameSessionMap.remove(user_email);
 	}
 	
+	/**
+	 * handles errors
+	 * @param session
+	 * @param throwable
+	 */
 	@OnError
 	public void onError(Session session, Throwable throwable){
 		logger.info("Entered into Error");
 	}
 	
+	/**
+	 * sends string as message
+	 * @param user_email
+	 * @param result
+	 */
 	private void sendMessage(String user_email, String result) {	
 		String message = result;
     	try {
@@ -119,6 +157,11 @@ public class WebSocketServer {
         }
     }
 
+	/**
+	 * sends the message through the remote
+	 * @param message
+	 * @throws IOException
+	 */
 	private static void update(String message) throws IOException{
 		sessionUserEmailMap.forEach((session, username) -> {
     		synchronized (session) {
