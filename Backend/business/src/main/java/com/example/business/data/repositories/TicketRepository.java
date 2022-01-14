@@ -10,8 +10,6 @@ import com.example.business.data.entities.Ticket;
 
 /**
  * The repository layer interacts with the DB on the TicketsDAO
- * @author watis
- *
  */
 @Repository
 public interface TicketRepository extends CrudRepository<Ticket, Integer> {

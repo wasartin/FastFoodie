@@ -18,8 +18,6 @@ import com.example.business.data.services.RestaurantService;
 
 /**
  *  A (REST Api) Controller class that "receives" HTTP requests from the front end for interacting with the restaurant repository.
- * @author Jon
- *
  */
 @RestController
 @RequestMapping(value="/restaurants")

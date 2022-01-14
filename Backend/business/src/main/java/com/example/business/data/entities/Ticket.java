@@ -11,8 +11,6 @@ import javax.persistence.Table;
 
 /**
  * An entity (or dao) that maps to the table 'ticket' in the Database. This represents the model of the object.
- * @author watis
- *
  */
 @Entity
 @Table(name="ticket")

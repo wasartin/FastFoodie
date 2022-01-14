@@ -13,8 +13,6 @@ import org.springframework.stereotype.Repository;
 /**
  * The bulk of the backend business logic. All of the service classes do the some functions,
  * this abstract class cuts down on the repetitive functions by using generics.
- * @author Will
- *
  * @param <E> The DAO
  * @param <K> The type of id this DAO uses.
  */

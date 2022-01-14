@@ -19,7 +19,6 @@ import com.example.business.data.services.FoodService;
 /**
  * This class follows along with a Backend for frontend (BFF) design pattern. It combines and does more 
  * for the front end, so they can do less.
- * @author Will
  *
  */
 @RestController
@@ -47,12 +46,4 @@ public class ApiController {
 		}
 		return result;
 	}
-	
-	
-	
-	
-	
-	
-	
-	
 }

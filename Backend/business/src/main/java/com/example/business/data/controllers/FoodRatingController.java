@@ -20,8 +20,6 @@ import com.example.business.data.services.FoodService;
 
 /**
  *  A (REST Api) Controller class that "receives" HTTP requests from the front end for interacting with the FoodRating repository.
- * @author Will and Jon
- *
  */
 @RestController
 @RequestMapping(value="/foodRatings")
@@ -33,9 +31,7 @@ public class FoodRatingController {
 	
 	@Autowired
 	FoodService foodServ;
-	
-	
-	
+
 	/**
 	 * Uses Repo class to return a rating in the DB
 	 * @return aFood Rating

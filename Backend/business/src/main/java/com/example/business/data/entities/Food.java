@@ -10,8 +10,6 @@ import javax.validation.constraints.Digits;
 
 /**
  * An entity (or dao) that maps to the table 'food' in the Database. This represents the model of the object.
- * @author watis
- *
  */
 @Entity
 @Table(name="food")

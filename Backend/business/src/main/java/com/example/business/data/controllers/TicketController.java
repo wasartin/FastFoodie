@@ -18,8 +18,6 @@ import com.example.business.data.services.TicketService;
 
 /**
  * A (REST Api) Controller class that "receives" HTTP requests from the front end for interacting with the ticket repository.
- * @author Will
- *
  */
 @RestController
 @RequestMapping(value="/tickets")
@@ -37,55 +35,31 @@ public class TicketController{
 	public Optional<Ticket> getSpecific(@PathVariable int ticket_id){
 		return ticketService.getEntityByID(ticket_id);
 	}
-	
-	/**
-	 * 
-	 * @return
-	 */
+
 	@RequestMapping(method = RequestMethod.GET, path = "/all")
 	@ResponseBody
 	public Iterable<Ticket> getAll(){
 		return (List<Ticket>) ticketService.getAllEntities();
 	}
-	
-	/**
-	 * 
-	 * @param user_email
-	 * @return
-	 */
+
 	@RequestMapping(method = RequestMethod.GET, path = "all/user/{user_email}")
 	@ResponseBody
 	public List<Ticket> getAllForUser(@PathVariable String user_email){
 		return ticketService.getAllticketsByUser(user_email);
 	}
-	
-	/**
-	 * 
-	 * @param admin_email
-	 * @return
-	 */
+
 	@RequestMapping(method = RequestMethod.GET, path = "all/admin/{admin_email}")
 	@ResponseBody
 	public List<Ticket> getAllForAdmin(@PathVariable String admin_email){
 		return ticketService.getAllTicketsForAdmin(admin_email);
 	}
-	
-	/**
-	 * 
-	 * @param newTicket
-	 * @return
-	 */
+
 	@RequestMapping(method = RequestMethod.POST, path = "/create", produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public ResponseEntity<?> createTicketByJSON(@RequestBody Ticket newTicket) {
 		return ticketService.createEntity(newTicket, newTicket.getTicket_id());
 	}
-	
-	/**
-	 * 
-	 * @param ticket_id
-	 * @return
-	 */
+
 	@RequestMapping(method = RequestMethod.DELETE, path = "/delete/{ticket_id}", produces = MediaType.APPLICATION_JSON_VALUE) 
 	@ResponseBody
 	public ResponseEntity<?> deleteTicket(@PathVariable int ticket_id) {

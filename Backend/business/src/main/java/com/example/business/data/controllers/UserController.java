@@ -16,10 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.business.data.entities.User;
 import com.example.business.data.services.UserService;
 
-/**
- * @author Will and Jon
- *
- */
 @RestController
 @RequestMapping(value="/users")
 public class UserController {

@@ -26,10 +26,6 @@ import com.example.business.data.entities.User;
 import com.example.business.data.repositories.UserRepository;
 import com.example.business.data.services.UserService;
 
-/**
- * @author Will
- *
- */
 public class UserServiceTest {
 	
 	@InjectMocks

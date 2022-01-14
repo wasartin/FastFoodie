@@ -9,8 +9,6 @@ import javax.persistence.Table;
  * An entity (or dao) that maps to the table 'user' in the Database. This represents the model of the object.
  * Users can either be general users (allowed some functions and abilities), regisitered users (more functions) or admin
  * (they can do whatever).
- * @author watis
- *
  */
 @Entity
 @Table(name="user")
