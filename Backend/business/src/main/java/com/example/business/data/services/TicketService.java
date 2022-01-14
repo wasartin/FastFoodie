@@ -10,9 +10,7 @@ import com.example.business.data.repositories.TicketRepository;
 
 /**
  * The favorites service class is where the bulk of the business logic is. 
- * This is the layer that will interface with its repository. 
- * @author watis
- *
+ * This is the layer that will interface with its repository.
  */
 @Service
 public class TicketService extends AbstractService<Ticket, Integer>{

@@ -1,8 +1,0 @@
-<resources>
-    <string name="app_name">MakeAGui</string>
-    <string name="edit_message">Food to lookup</string>
-    <string name="button_label">Search</string>
-    <string name="Welcome_Message">Welcome to Carb Tracker 9000</string>
-    <string name="Request_Process">We are proccessing your request</string>
-
-</resources>

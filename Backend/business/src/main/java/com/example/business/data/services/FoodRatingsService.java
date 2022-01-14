@@ -10,9 +10,7 @@ import com.example.business.data.repositories.FoodRatingRepository;
 
 /**
  * The foodRating service class is where the bulk of the business logic is. 
- * This is the layer that will interface with its repository. 
- * @author watis
- *
+ * This is the layer that will interface with its repository.
  */
 @Service
 public class FoodRatingsService extends AbstractService<FoodRating, Integer>{

@@ -1,8 +1,0 @@
-<resources>
-    <string name="app_name">Cool App</string>
-    <string name="list_editor">List Maker</string>
-    <string name="greeter">Greeter</string>
-    <string name="map">Map</string>
-    <string name="speech_to_text">Dictation</string>
-    <string name="title_activity_maps">Map</string>
-</resources>

@@ -13,9 +13,7 @@ import com.example.business.data.repositories.FoodRepository;
 
 /**
  * The Food service class is where the bulk of the business logic is. 
- * This is the layer that will interface with its repository. 
- * @author watis
- *
+ * This is the layer that will interface with its repository.
  */
 @Service
 @Transactional
@@ -42,7 +40,7 @@ public class FoodService extends AbstractService<Food, Integer>{
 	public Page<Food> listAllByPage(Pageable pageable) {
 		return foodRepository.findAll(pageable);
 	}
-//
+
 	public Page<Food> findPaginated(int page, int size) {
 		return foodRepository.findAll(PageRequest.of(page, size));
 	}

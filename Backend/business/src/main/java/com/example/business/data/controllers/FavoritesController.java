@@ -20,8 +20,6 @@ import com.example.business.data.services.FoodService;
 
 /**
  *  A (REST Api) Controller class that "receives" HTTP requests from the front end for interacting with the Favorites repository.
- * @author Jon & Will(For that sweet refactor)
- *
  */
 @RestController
 @RequestMapping(value="/favorites")

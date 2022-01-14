@@ -7,8 +7,6 @@ import org.springframework.web.socket.server.standard.ServerEndpointExporter;
 
 /**
  * A class that returns websocket configuration.
- * @author watis
- *
  */
 @ConditionalOnWebApplication
 @Configuration

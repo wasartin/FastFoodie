@@ -27,8 +27,6 @@ import com.example.business.data.services.FoodService;
 
 /**
  *  A (REST Api) Controller class that "receives" HTTP requests from the front end for interacting with the Food repository.
- * @author Will and Jon
- *
  */
 @RestController
 @RequestMapping(value="/foods")
@@ -76,14 +74,6 @@ public class FoodController {
 		Page<Food> list = foodService.categorySearch(category, PageRequest.of(p.getPageNumber(), p.getPageSize(), sort));
 		return list;
 	}
-	
-//	@RequestMapping(value = "/search/{keyword}", method = RequestMethod.GET)
-//	public Page<Food> lazyFrontEnd(@PathVariable String keyword,
-//										@SortDefault Sort sort,
-//										@PageableDefault Pageable p) {
-//		Page<Food> list = foodService.listWithKeywordAndOrdering(keyword, PageRequest.of(p.getPageNumber(), p.getPageSize(), sort));
-//		return list;
-//	}
 
 	@RequestMapping(value = "/conditionalPagination", method = RequestMethod.GET)
 	public Page<Food> somethingNew(@RequestParam(value="property", required=false) String property,
@@ -141,8 +131,5 @@ public class FoodController {
 	public ResponseEntity<?> editFood(@RequestBody Food newFood, @PathVariable int food_id) {
 		return foodService.editEntity(newFood, food_id);
 	}
-	
-	
-	
-	
+
 }

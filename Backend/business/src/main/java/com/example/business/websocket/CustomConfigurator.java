@@ -8,8 +8,6 @@ import org.springframework.web.socket.server.standard.ServerEndpointRegistration
 
 /**
  * For any custom configuration of the websocket class.
- * @author watis
- *
  */
 public class CustomConfigurator extends ServerEndpointRegistration.Configurator implements ApplicationContextAware {
 
