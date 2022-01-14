@@ -1,4 +1,4 @@
-# Team_36
+# Fast-Foodie
 
 An android application that finds the best fast food meal that matches the user's dietary restrictions.
 
